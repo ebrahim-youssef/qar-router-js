@@ -1,0 +1,35 @@
+{
+  "name": "quranic-audio-router",
+  "version": "0.1.0",
+  "description": "One API over four Quran audio providers: discover recordings, resolve them, get normalized audio sources.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "files": ["dist", "README.md", "LICENSE"],
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs" },
+    "./server": { "types": "./dist/server.d.ts", "import": "./dist/server.js", "require": "./dist/server.cjs" }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "catalog:sync": "node --experimental-strip-types scripts/sync-catalog.ts",
+    "catalog:check": "node --experimental-strip-types scripts/sync-catalog.ts --check",
+    "gen": "node --experimental-strip-types scripts/generate.ts",
+    "gen:check": "node --experimental-strip-types scripts/generate.ts --check",
+    "typecheck": "tsc --noEmit",
+    "build": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "test": "vitest run",
+    "test:live": "vitest run -c vitest.live.config.ts"
+  },
+  "devDependencies": {
+    "expect-type": "1.4.0",
+    "fast-check": "4.9.0",
+    "tsup": "8.5.1",
+    "typescript": "7.0.2",
+    "vitest": "4.1.11",
+    "@types/node": "26.2.0"
+  }
+}
