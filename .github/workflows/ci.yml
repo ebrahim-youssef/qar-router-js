@@ -23,11 +23,13 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      - name: Catalog matches the curation pipeline output
-        run: pnpm -F quranic-audio-router catalog:check
-        continue-on-error: true   # the scraper repo is not checked out here
-
+      # Codegen runs through node --experimental-strip-types, which needs Node 22.6+.
+      # This is a dev-tooling limit only: the published package is compiled JS and the
+      # smoke test below proves it works on every Node in the matrix.
+      # catalog:check is deliberately absent: it diffs against the scraper repo, which is
+      # not checked out here. It runs locally before a catalog refresh.
       - name: Generated sources match the vendored catalog
+        if: matrix.node == '24'
         run: pnpm -F quranic-audio-router gen:check
 
       - name: Typecheck
