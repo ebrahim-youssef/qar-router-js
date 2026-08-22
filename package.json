@@ -11,6 +11,8 @@
     "catalog:check": "pnpm -F quranic-audio-router catalog:check"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2",
     "typescript": "7.0.2"
   },
   "packageManager": "pnpm@10.29.3"
