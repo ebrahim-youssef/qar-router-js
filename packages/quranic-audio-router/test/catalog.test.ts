@@ -71,6 +71,17 @@ describe('catalog and core routing', () => {
     expect(range.sources).toHaveLength(3)
     expect(range.sources.every(source => source.granularity === 'ayah' && source.representation === 'segment')).toBe(true)
   })
+  it('exposes provider-native vocabulary for transparency without requiring it for routing', () => {
+    const husary = queryCatalog({ reciter: 'mahmoud_alhusary', riwayah: 'hafs', style: 'murattal' }).sources
+    const mp3 = husary.find(source => source.provider === 'mp3Quran')
+    const every = husary.filter(source => source.provider === 'everyAyah')
+    expect(mp3?.providerMetadata).toMatchObject({ moshafId: 118, server: 'https://server13.mp3quran.net/husr/' })
+    expect(every.map(source => source.providerMetadata.subfolder).sort()).toEqual(['Husary_128kbps', 'Husary_64kbps'])
+    const qfa = husary.find(source => source.provider === 'quranFoundationAyah')
+    const qfs = husary.find(source => source.provider === 'quranFoundationSurah')
+    expect(qfa?.providerMetadata.id).toBe(6)
+    expect(qfs?.providerMetadata.id).toBe(6)
+  })
   it('round-trips every valid verse key', () => {
     fc.assert(fc.property(fc.integer({ min: 1, max: 114 }).chain(surah => fc.integer({ min: 1, max: ayahCount(surah) }).map(ayah => ({ surah, ayah }))), verse => { expect(parseVerseKey(formatVerseKey(verse))).toEqual(verse); return true }))
   })

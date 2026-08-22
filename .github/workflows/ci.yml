@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['20', '22', '24']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.29.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Catalog matches the curation pipeline output
+        run: pnpm -F quranic-audio-router catalog:check
+        continue-on-error: true   # the scraper repo is not checked out here
+
+      - name: Generated sources match the vendored catalog
+        run: pnpm -F quranic-audio-router gen:check
+
+      - name: Typecheck
+        run: pnpm -F quranic-audio-router typecheck
+
+      - name: Unit tests
+        run: pnpm -F quranic-audio-router test
+
+      - name: Build
+        run: pnpm -F quranic-audio-router build
+
+      - name: Tarball contains only what it should
+        run: node packages/quranic-audio-router/test/packaging/assert-pack.mjs
+
+      - name: Bundle size budget
+        run: node packages/quranic-audio-router/test/packaging/assert-size.mjs
+
+      - name: Packaging smoke test in a clean consumer
+        run: node packages/quranic-audio-router/test/packaging/smoke.mjs
+
+  playground:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.29.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -F quranic-audio-router build
+      - run: pnpm -F playground typecheck
+      - run: pnpm -F playground build
