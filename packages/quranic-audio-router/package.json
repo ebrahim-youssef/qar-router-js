@@ -1,5 +1,5 @@
 {
-  "name": "quranic-audio-router",
+  "name": "@qar/router-js",
   "version": "0.1.0",
   "description": "One API over four Quran audio providers: discover recordings, resolve them, get normalized audio sources.",
   "type": "module",
