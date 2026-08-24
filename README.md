@@ -1,4 +1,4 @@
-# quranic-audio-router
+# @qar/router-js
 
 One API over four Quran audio providers. Ask for an ayah, a range, or a surah, and get back
 normalized audio sources without caring which provider answered or how it names things.
@@ -28,13 +28,13 @@ reference for the recitation, plus the routing to turn it into audio.
 ## Install
 
 ```bash
-npm install quranic-audio-router
+npm install @qar/router-js
 ```
 
 ## Use
 
 ```ts
-import { getAyah, queryCatalog, Reciters } from 'quranic-audio-router'
+import { getAyah, queryCatalog, Reciters } from '@qar/router-js'
 
 const result = await getAyah({
   ayah: '2:255',
@@ -104,7 +104,7 @@ headers, and a client secret does not belong in a browser bundle, so QF lives be
 point and the browser build rejects QF credentials rather than warning about them.
 
 ```ts
-import { quranFoundation } from 'quranic-audio-router/server'
+import { quranFoundation } from '@qar/router-js/server'
 ```
 
 ## Data

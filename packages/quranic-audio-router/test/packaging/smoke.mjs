@@ -17,7 +17,7 @@ try {
   execFileSync('npm', ['install', '--no-audit', '--no-fund', './' + tgz], { cwd: consumer, stdio: 'pipe' })
 
   writeFileSync(join(consumer, 'esm.mjs'), `
-    import { getAyah, queryCatalog, Reciters } from 'quranic-audio-router'
+    import { getAyah, queryCatalog, Reciters } from '@qar/router-js'
     const q = queryCatalog()
     if (q.reciters.length !== 254) throw new Error('reciters: ' + q.reciters.length)
     if (q.classes.length !== 300) throw new Error('classes: ' + q.classes.length)
@@ -28,7 +28,7 @@ try {
     console.log('  esm ok ->', s.url)
   `)
   writeFileSync(join(consumer, 'cjs.cjs'), `
-    const { queryCatalog } = require('quranic-audio-router')
+    const { queryCatalog } = require('@qar/router-js')
     const n = queryCatalog().reciters.length
     if (n !== 254) throw new Error('cjs reciters: ' + n)
     console.log('  cjs ok ->', n, 'reciters')
