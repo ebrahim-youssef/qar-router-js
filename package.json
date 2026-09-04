@@ -3,14 +3,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm -F quranic-audio-router build",
-    "test": "pnpm -F quranic-audio-router test",
+    "build": "pnpm -F @qar/router-js build",
+    "test": "pnpm -F @qar/router-js test",
     "typecheck": "pnpm -r typecheck",
-    "gen": "pnpm -F quranic-audio-router gen",
-    "gen:check": "pnpm -F quranic-audio-router gen:check",
-    "catalog:check": "pnpm -F quranic-audio-router catalog:check"
+    "gen": "pnpm -F @qar/router-js gen",
+    "gen:check": "pnpm -F @qar/router-js gen:check",
+    "catalog:check": "pnpm -F @qar/router-js catalog:check"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2",
     "typescript": "7.0.2"
   },
   "packageManager": "pnpm@10.29.3"

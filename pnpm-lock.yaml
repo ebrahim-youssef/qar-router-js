@@ -17,7 +17,7 @@ importers:
       prism-react-renderer:
         specifier: 2.4.1
         version: 2.4.1(react@19.2.8)
-      quranic-audio-router:
+      @qar/router-js:
         specifier: workspace:*
         version: link:../../packages/quranic-audio-router
       react:
