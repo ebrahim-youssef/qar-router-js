@@ -7,3 +7,8 @@ dist/
 
 # internal planning, not published
 PLAN.md
+
+# env files
+.env
+.env.*
+!.env.example
